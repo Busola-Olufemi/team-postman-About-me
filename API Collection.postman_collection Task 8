@@ -40,33 +40,57 @@
 			"name": "Get All Entries",
 			"event": [
 				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.environment.get(\"variable_key\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"pm.test(\"Status should be code is 200\", function () {\r",
-							"pm.globals.get(\"variable_key\");\r",
 							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Status code name should have an OK string\", function () {\r",
-							"    pm.response.to.have.status(\"OK\");\r",
 							"\r",
+							"    pm.test(\"Status code name should have an OK string\", function () {\r",
+							"        pm.response.to.have.status(\"OK\");\r",
+							"    });\r",
+							"});\r",
 							"var jsonData = pm.response.json();\r",
-							"console.log(jsonData.categories)\r",
+							"console.log(jsonData.paymentCurrency)\r",
+							"console.log(jsonData.title)\r",
+							"console.log(jsonData.categories[2])\r",
 							"\r",
-							"pm.test(\"Body is correct\", function () {\r",
-							"    pm.response.to.have.body(\"response_body_string\");\r",
-							"});\r",
-							"pm.test(\"Body is correct\", function () {\r",
-							"    pm.response.to.have.body(\"response_body_string\");\r",
+							"\r",
+							"\r",
+							"pm.test(\"payment currency is Euro\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"EUR\")\r",
+							"    });\r",
+							"    pm.test(\"Tttle is Fusio\", function () {\r",
+							"        pm.expect(jsonData.title).to.eql(\"Fusio\");\r",
+							"    });\r",
+							"    pm.test(\"Body matches developer\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"developer\");\r",
+							"    pm.test(\"Body response lnk 1 should be rel\", function () {\r",
+							"    pm.expect(jsonData.links[1].rel).to.eql(\"openapi\");\r",
+							"    });\r",
+							"     });\r",
+							"\r",
+							"/**\r",
+							" * \r",
+							" *  pm.test(\"Body matches string\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
+							"    });\r",
 							"    pm.test(\"Your test name\", function () {\r",
 							"        var jsonData = pm.response.json();\r",
 							"        pm.expect(jsonData.value).to.eql(100);\r",
 							"    });\r",
-							"    pm.test(\"Body matches string\", function () {\r",
-							"        pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
-							"    });\r",
-							"});\r",
-							"});"
+							"  pm.globals.get(\"variable_key\");\r",
+							" */\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -136,9 +160,50 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"\r",
+							"pm.test(\"Status code name should have an OK string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
 							"const response = pm.response.json();\r",
-							"// print any kind of variables/message on the screen\r",
+							"\r",
+							"console.log(response);\r",
+							"console.log(response[0].id);\r",
 							"console.log(response[2].name);\r",
+							"console.log(response[2].id);\r",
+							"console.log(response[3].name);\r",
+							"\r",
+							"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
+							"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"pm.test(\"Search for a book name called The Vanishing Half\", function (){\r",
+							"    pm.expect(response[1].name).to.eql(\"The Vanishing Half\")\r",
+							"});\r",
+							"pm.test(\"confirm that entry 2 id is 4\", function (){\r",
+							"    pm.expect(response[2].id).to.eql(4)\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"The MidnigtLibraryId\", response[2].id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"/**pm.environment.set(\"The RussianId\", response[0].id);\r",
+							"\r",
+							"});\r",
+							" \r",
+							" \r",
+							"// print any kind of variables/message on the screen\r",
+							"//console.log(response[2].name);\r",
+							"\r",
+							"//console.log(Fiction[0].id);\r",
+							"\r",
+							"pm.test(\"The id number of a fiction book that available with the name The Midnight Library is \" , function () {\r",
+							"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
 							"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
 							"});\r",
@@ -147,15 +212,11 @@
 							"console.log(Fiction)\r",
 							"//Print out the id of a fiction book that is available called \"The Midnight Library\"*/\r",
 							"\r",
-							"const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
+							"//const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
 							"\r",
-							"console.log(Fiction[0].id);\r",
 							"\r",
-							"pm.test(\"The id number of a fiction book that available with the name The Midnight Library is \" , function () {\r",
-							"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
-							"});\r",
 							"\r",
-							"pm.globals.set(\"bookId\", Fiction[0].id);\r",
+							"//pm.globals.set(\"bookId\", Fiction[0].id);\r",
 							"\r",
 							"\r",
 							"\r",
@@ -195,10 +256,27 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const OrderId = pm.response.json();\r",
 							"\r",
-							"console.log(OrderId.orderId);\r",
-							"pm.globals.set(\"OrderId\", OrderId.orderId);\r",
+							"pm.test(\"Status code should be  201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Status code name should have string created\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"pm.environment.get(\"variable_key\");\r",
+							"\r",
+							"\r",
+							"const OrderIdb = pm.response.json();\r",
+							"console.log(OrderIdb.created);\r",
+							"console.log(OrderIdb.orderId);\r",
+							"\r",
+							"pm.environment.set(\"OrderIdb\", OrderIdb.orderId);\r",
+							"\r",
+							"\r",
+							"//console.log(OrderId.orderId);\r",
+							"\r",
+							"\r",
+							"//pm.globals.set(\"OrderId\", OrderId.orderId);\r",
 							""
 						],
 						"type": "text/javascript"
@@ -211,7 +289,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
 							"type": "string"
 						}
 					]
@@ -220,7 +298,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"bookId\": 1,\n  \"customerName\": \"John\"\n}",
+					"raw": "{\n  \"bookId\": {{The MidnigtLibraryId}},\n  \"customerName\": \"Busola\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -262,7 +340,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
 							"type": "string"
 						}
 					]
@@ -312,7 +390,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
 							"type": "string"
 						}
 					]
@@ -351,7 +429,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
 							"type": "string"
 						}
 					]
@@ -368,12 +446,9 @@
 					}
 				},
 				"url": {
-					"raw": "https://simple-books-api.glitch.me/orders/:orderId",
-					"protocol": "https",
+					"raw": "{{baseUrlbooks}}/orders/:orderId",
 					"host": [
-						"simple-books-api",
-						"glitch",
-						"me"
+						"{{baseUrlbooks}}"
 					],
 					"path": [
 						"orders",
@@ -382,7 +457,7 @@
 					"variable": [
 						{
 							"key": "orderId",
-							"value": "bl8ZbxUCq59bH8DyYWvjo"
+							"value": "nH8xxRKK1PuvvOgrtPKhc"
 						}
 					]
 				}
@@ -396,12 +471,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Status code name has string OK\", function () {\r",
-							"    pm.response.to.have.status(\"No Content\");\r",
+							"    pm.response.to.have.status(\"OK\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -414,7 +489,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "03c5abfe090876ab74a2a2ac4c079174a35fd88c9b88cd2164ff4b9d56c31d6c",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
 							"type": "string"
 						}
 					]
@@ -442,7 +517,7 @@
 					"variable": [
 						{
 							"key": "orderId",
-							"value": "bl8ZbxUCq59bH8DyYWvjo"
+							"value": "FMLMpC25LAaYW1e-t_1yH"
 						}
 					]
 				}

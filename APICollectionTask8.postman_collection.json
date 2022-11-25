@@ -1,0 +1,623 @@
+{
+	"info": {
+		"_postman_id": "e97d40de-0408-4ec9-b81d-d8f92ad7adee",
+		"name": "APICollectionTask8",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24412026"
+	},
+	"item": [
+		{
+			"name": "Get All Todo Entries",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"pm.test(\"Status code name should have Not Found string\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Entries",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.environment.get(\"variable_key\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData.paymentCurrency)\r",
+							"console.log(jsonData.title)\r",
+							"console.log(jsonData.categories[2])\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"Currency\", jsonData.paymentCurrency);\r",
+							"\r",
+							"pm.test(\"Status should be code is 200\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"\r",
+							"    pm.test(\"Status code name should have an OK string\", function () {\r",
+							"        pm.response.to.have.status(\"OK\");\r",
+							"    });\r",
+							"\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData.paymentCurrency)\r",
+							"console.log(jsonData.title)\r",
+							"console.log(jsonData.categories[2])\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"payment currency is Euro\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"EUR\")\r",
+							"    });\r",
+							"    pm.test(\"Tttle is Fusio\", function () {\r",
+							"        pm.expect(jsonData.title).to.eql(\"Fusio\");\r",
+							"    });\r",
+							"    pm.test(\"Body matches developer\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"developer\");\r",
+							"    pm.test(\"Body response lnk 1 should be rel\", function () {\r",
+							"    pm.expect(jsonData.links[1].rel).to.eql(\"openapi\");\r",
+							"    });\r",
+							"     });\r",
+							"\r",
+							"/**\r",
+							" * \r",
+							" *  pm.test(\"Body matches string\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"string_you_want_to_search\");\r",
+							"    });\r",
+							"    pm.test(\"Your test name\", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.value).to.eql(100);\r",
+							"    });\r",
+							"  pm.globals.get(\"variable_key\");\r",
+							" */\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "https://demo.fusio-project.org/index.php/"
+			},
+			"response": []
+		},
+		{
+			"name": "Get entry per ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"pm.test(\"Status code name should have Not Found string\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todo/?todo_id=2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todo",
+						""
+					],
+					"query": [
+						{
+							"key": "todo_id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "https://demo.fusio-project.org/index.php/todo/:todo_id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books fiction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name should have an OK string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"console.log(response);\r",
+							"console.log(response[0].id);\r",
+							"console.log(response[2].name);\r",
+							"console.log(response[2].id);\r",
+							"console.log(response[3].name);\r",
+							"\r",
+							"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
+							"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"pm.test(\"Search for a book name called The Vanishing Half\", function (){\r",
+							"    pm.expect(response[1].name).to.eql(\"The Vanishing Half\")\r",
+							"});\r",
+							"pm.test(\"confirm that entry 2 id is 4\", function (){\r",
+							"    pm.expect(response[2].id).to.eql(4)\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"The MidnigtLibraryId\", response[2].id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"/**pm.environment.set(\"The RussianId\", response[0].id);\r",
+							"\r",
+							"});\r",
+							" \r",
+							" \r",
+							"// print any kind of variables/message on the screen\r",
+							"//console.log(response[2].name);\r",
+							"\r",
+							"//console.log(Fiction[0].id);\r",
+							"\r",
+							"pm.test(\"The id number of a fiction book that available with the name The Midnight Library is \" , function () {\r",
+							"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
+							"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"\r",
+							"/*const Fiction = response.filter((book) => book.type === \"fiction\");\r",
+							"console.log(Fiction)\r",
+							"//Print out the id of a fiction book that is available called \"The Midnight Library\"*/\r",
+							"\r",
+							"//const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
+							"\r",
+							"\r",
+							"\r",
+							"//pm.globals.set(\"bookId\", Fiction[0].id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlbooks}}/books?type=fiction",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "fiction"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books Copy non- fiction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name should have an OK string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"console.log(response);\r",
+							"console.log(response[0].id);\r",
+							"console.log(response[1].name);\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Search for a book name called Untamed\", function (){\r",
+							"    pm.expect(response[1].name).to.eql(\"Untamed\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Search for a book name called Just as I Am\", function (){\r",
+							"    pm.expect(response[0].name).to.eql(\"Just as I Am\")\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"Just as I Am\", response[0].id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"/**pm.environment.set(\"The RussianId\", response[0].id);\r",
+							"\r",
+							"});\r",
+							" \r",
+							" \r",
+							"// print any kind of variables/message on the screen\r",
+							"//console.log(response[2].name);\r",
+							"\r",
+							"//console.log(Fiction[0].id);\r",
+							"\r",
+							"pm.test(\"The id number of a fiction book that available with the name The Midnight Library is \" , function () {\r",
+							"    pm.expect(Fiction[0].name).eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Search for a book name called Viscount Who Loved Me\", function (){\r",
+							"    pm.expect(response[3].name).to.eql(\"Viscount Who Loved Me\")\r",
+							"});\r",
+							"\r",
+							"/*const Fiction = response.filter((book) => book.type === \"fiction\");\r",
+							"console.log(Fiction)\r",
+							"//Print out the id of a fiction book that is available called \"The Midnight Library\"*/\r",
+							"\r",
+							"//const Fiction = response.filter((book) => book.type === \"fiction\" && book.available === true && book.name === \"Viscount Who Loved Me\")\r",
+							"\r",
+							"\r",
+							"\r",
+							"//pm.globals.set(\"bookId\", Fiction[0].id);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlbooks}}/books?type=non-fiction",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "non-fiction"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place a book order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code should be  201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Status code name should have string created\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"const OrderIdb = pm.response.json();\r",
+							"console.log(OrderIdb.created);\r",
+							"console.log(OrderIdb.orderId);\r",
+							"\r",
+							"pm.environment.set(\"OrderIdb\", OrderIdb.orderId);\r",
+							"\r",
+							"\r",
+							"//console.log(OrderId.orderId);\r",
+							"\r",
+							"\r",
+							"//pm.globals.set(\"OrderId\", OrderId.orderId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bookId\": {{The MidnigtLibraryId}},\n  \"customerName\": \"Busola\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlbooks}}/orders",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status code name should have ok string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlbooks}}/orders",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status code name should have OK string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerName\": \"Busola\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlbooks}}/orders/:orderId",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "nH8xxRKK1PuvvOgrtPKhc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string Not Found\", function () {\r",
+							"    pm.response.to.have.status(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "986c0c08fd7b0343ed08fa67837e4c44a67bba2d65cfeb292720cea8aeec2bb5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrlbooks}}/orders/:orderId",
+					"host": [
+						"{{baseUrlbooks}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{OrderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
